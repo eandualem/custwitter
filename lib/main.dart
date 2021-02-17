@@ -1,6 +1,9 @@
-import 'package:custwitter/screens/auth/signup.dart';
+import 'package:custwitter/models/User.dart';
+import 'package:custwitter/screens/wrapper.dart';
+import 'package:custwitter/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,13 +26,9 @@ class MyApp extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            home: SignUp(),
+          return StreamProvider<UserModel>.value(
+              value: AuthService().user,
+            child: MaterialApp(home: Wrapper(),),
           );
         }
 
