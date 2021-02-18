@@ -1,6 +1,7 @@
 import 'package:custwitter/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}): super(key: key);
@@ -10,7 +11,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  AuthService _authService = new AuthService();
   String _email = "";
   String _password = "";
 
@@ -39,11 +39,11 @@ class _SignUpState extends State<SignUp> {
                 ),
                 RaisedButton(
                   child: Text("SignUp"),
-                  onPressed: () async => {_authService.signUp(_email, _password)}
+                  onPressed: () async => {context.read<AuthService>().signUp(_email, _password)}
                 ),
                 RaisedButton(
                   child: Text("SignIn"),
-                  onPressed: () async => {_authService.signIn(_email, _password)}
+                  onPressed: () async => {context.read<AuthService>().signIn(_email, _password)}
                 )
               ],
             )

@@ -2,7 +2,9 @@ import 'package:custwitter/models/User.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
+
+  AuthService(this._auth);
 
   UserModel _userFromFirebase(User user) {
     return user != null ? UserModel(id: user.uid) : null;
@@ -12,15 +14,16 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebase); // .map((user) => _userFromFirebase) simplified
   }
 
-  Future signUp(email, password) async{
-    print("SignUp Action!");
+  Future<String> signUp(email, password) async{
     try {
-      User user = (await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password
-      )) as User;
+      );
+      return "Signed Up";
     }
     on FirebaseAuthException catch (e) {
+      print("3SignUp Action!");
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       }
@@ -29,17 +32,19 @@ class AuthService {
       }
     }
     catch (e) {
+      print("4SignUp Action!");
       print(e);
     }
+    return null;
   }
 
-  Future signIn(email, password) async {
-    print("SignIn Action!");
+  Future<String> signIn(email, password) async {
     try {
-      User user = (await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
           email: email,
           password: password
-      )) as User;
+      );
+      return "Signed In";
     }
     on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -52,5 +57,18 @@ class AuthService {
     catch (e) {
       print(e);
     }
+    return null;
+  }
+
+  Future signOut() async
+  {
+    try{
+      return await _auth.signOut();
+    }
+    catch(e) {
+      print(e.toString());
+      return null;
+    }
+
   }
 }
