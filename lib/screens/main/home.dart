@@ -12,8 +12,32 @@ class Home extends StatelessWidget {
           FlatButton.icon(
             label: Text("SignOut"),
             icon: Icon(Icons.person),
-            onPressed: () async {context.read<AuthService>().signOut();},
+            onPressed: null,
           )],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Drawer header"),
+              decoration: BoxDecoration(color: Colors.blue),
+            ),
+            ListTile(
+              title: Text("Logout"),
+              onTap: () {
+                Navigator.pushNamed(context, "/profile");
+              },
+            ),
+            ListTile(
+              title: Text("Logout"),
+              onTap: () async {context.read<AuthService>().signOut();},
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {Navigator.pushNamed(context, '/add');},
+        child: Icon(Icons.add),
       ),
     );
   }

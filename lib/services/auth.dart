@@ -1,4 +1,4 @@
-import 'package:custwitter/models/User.dart';
+import 'package:custwitter/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -15,6 +15,7 @@ class AuthService {
   }
 
   Future<String> signUp(email, password) async{
+    print("email = ${email} & password = ${password}");
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email,
@@ -23,17 +24,10 @@ class AuthService {
       return "Signed Up";
     }
     on FirebaseAuthException catch (e) {
-      print("3SignUp Action!");
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      }
-      else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
+      print("signUp error 1 ///=>>> ${e.message}");
     }
     catch (e) {
-      print("4SignUp Action!");
-      print(e);
+      print("signUp error 2 ///=>>> ${e.message}");
     }
     return null;
   }

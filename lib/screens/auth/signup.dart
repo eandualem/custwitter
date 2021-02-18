@@ -34,7 +34,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 TextFormField( // Password Field
                   onChanged: (val) => setState((){
-                    _email = val;
+                    _password = val;
                   }),
                 ),
                 RaisedButton(
