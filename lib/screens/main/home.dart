@@ -23,7 +23,7 @@ class Home extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.blue),
             ),
             ListTile(
-              title: Text("Logout"),
+              title: Text("Profile"),
               onTap: () {
                 Navigator.pushNamed(context, "/profile");
               },
